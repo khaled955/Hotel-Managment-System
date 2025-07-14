@@ -1,0 +1,71 @@
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+
+*{
+    padding:0px;
+    margin:0px;
+  box-sizing: border-box;
+    
+}
+
+
+
+.swiper-box {
+  overflow-x: hidden;
+  width: 100%;
+} 
+
+
+
+
+
+
+
+
+
+
+
+
+
+.swiper {
+  width: 100%;
+  overflow: hidden;
+} 
+
+
+
+
+
+
+.swiper-slide {
+  width: auto !important;
+  height: auto;
+  transition: transform 0.3s ease;
+
+} 
+
+
+
+.swiper-button-prev,
+.swiper-button-next {
+  color: #333 !important;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  width: 40px !important;
+  height: 40px !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.swiper-button-prev::after,
+.swiper-button-next::after {
+  font-size: 18px !important;
+  font-weight: bold;
+}
+
+
+
+
+
