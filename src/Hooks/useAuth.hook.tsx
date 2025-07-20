@@ -7,7 +7,7 @@ import Cookies from "js-cookie";
 
 export default function useAuth(){
    const navigate = useNavigate()
- const {token ,updateUserInformation ,getUserInformation,setToken} = useContext(AuthContext)!
+ const {token ,userInfo ,getUserInformation,setToken} = useContext(AuthContext)!
  let decodedData;
  if(token){
     decodedData = jwtDecode<DecodedToken>(token);
@@ -24,5 +24,5 @@ function logOut(){
 
 
 
- return {isUser , token ,setToken,logOut ,updateUserInformation,getUserInformation}
+ return {isUser , token ,setToken,logOut ,userInfo,getUserInformation}
 }

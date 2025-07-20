@@ -49,7 +49,7 @@ if(!exploreRoomsList) return <Loading/>
     <Typography component={"h2"} textAlign={"center"} variant="h4" mb={2}>Explore ALL Rooms </Typography>
 
 {/* bread crumb */}
-   <Stack spacing={2} mb={3}>
+   <Stack spacing={2} mb={3} px={5}>
       <Breadcrumbs separator="/" aria-label="breadcrumb">
         {breadcrumbs}
       </Breadcrumbs>
@@ -57,7 +57,7 @@ if(!exploreRoomsList) return <Loading/>
 
 
 
- <Grid container spacing={3} justifyContent={"center"}>
+ <Grid container spacing={3} justifyContent={"center"} px={3}>
   {exploreRoomsList.length === 0 ?<Typography component={"p"} textAlign={"center"}> No Rooms Available</Typography>:exploreRoomsList.map((room:RoomExplore , index:number)=><RoomCard key={room._id} room={room} index={index}/>
 )}
    </Grid>

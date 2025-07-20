@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import { HousePropSlider } from "./HouseSliderHome.interface";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
@@ -11,8 +11,6 @@ import photo5 from "../../../../assets/images/HousesBg/photo5.jpeg"
 import photo6 from "../../../../assets/images/HousesBg/photo6.webp"
 import photo7 from "../../../../assets/images/HousesBg/photo7.jpg"
 import photo8 from "../../../../assets/images/HousesBg/photo8.jpg"
- 
-
 
 
 
@@ -33,81 +31,65 @@ export default function HousesBackyardCard() {
     
   
     return (
-        <Box  sx={{ mb: {xs:2,md:6},paddingX: { xs: "20px", md: "50px" } }}>
-            <Box sx={{ display:'flex' }}>
-            <Swiper
-                modules={[ Autoplay]}
-                autoplay={{
-                    delay: 2500,
-                    disableOnInteraction: false,
-                }}
-                loop={true}
-                breakpoints={{
-                    320: {
-                    slidesPerView: 1,
-                    spaceBetween: 20,
-                    },
-                    768: {
-                        slidesPerView: 2,
-                        spaceBetween: 20,
-                    },
-                    922: {
-                        slidesPerView: 4,
-                        spaceBetween: 20,
-                    },
+    <Grid container>
+           <Grid size={{xs:12}}>
+                      <Box  className="swiper-box backyard"  sx={{ overflow: "hidden" }}>
+      <Swiper
         
-                }}
-            >
-                {housesList.map((house:HousePropSlider, slideIndex) => (
-                
-                    <SwiperSlide key={slideIndex} >
-                        <Box sx={{ width: '100%',
-                            height: "200px" }}>
-                            <Box
-                                sx={{
-                                    position: "absolute",
-                                    top: 0,
-                                    right: 0,
-                                    backgroundColor: "rgba(255, 73, 139, 1)",
-                                    color: "white",
-                                    padding: {
-                                      xs: "4px 10px",
-                                      sm: "6px 10px",
-                                      md: "6px 40px",
-                                    },
-                                    textAlign: "center",
-                                    borderRadius: "0 4px 0 30px",
-                                    fontWeight: "500",
-                                    fontSize: "14px",
-                                    zIndex: 100,
-                                    width: "30%",
-                                    whiteSpace: "nowrap",
-                                  }}
-                            >
-                                {house.price}
-                            </Box>
-                            <img 
-                                src={house.src} 
-                                alt= {house.title}
-                                width="100%"
-                                height="200px"
-                            />
-                        </Box>
-                        <Typography sx={{mt:1}}>
-                            <Typography component="span" sx={{fontWeight:400,fontSize:{xs:14,sm:20}}}>
-                                {house.title}
-                            </Typography>
-                            <br/>
-                            <Typography component="span"sx={{fontWeight:400,fontSize:{xs:10,sm:14}}}>
-                                {house.text}
-                            </Typography >
-                        </Typography>
-                    </SwiperSlide>
-                
+        spaceBetween={20}
+        modules={[Autoplay]}
+        autoplay={{
+          delay: 2500,
+          disableOnInteraction: false,
+        }}
+        loop={true}
+        breakpoints={{
+          300: { slidesPerView: 1 },
+          600: { slidesPerView: 2 },
+          900: { slidesPerView: 4 },
+          1000: { slidesPerView: 5 },
+          1200: { slidesPerView: 6 },
+        }}
+      >
+        {housesList.map((house, index) => (
+          <SwiperSlide key={index}>
+            <Box>
+              <Box position="relative" sx={{ width: "100%", height: 200, overflow: "hidden", borderRadius: 2 }}>
+                <img
+                  src={house.src}
+                  alt={house.title}
+                  style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                />
+                <Box
+                  sx={{
+                    position: "absolute",
+                    top: 0,
+                    right: 0,
+                    bgcolor: "rgba(255, 73, 139, 1)",
+                    color: "#fff",
+                    px: 2,
+                    py: 1,
+                    fontSize: 12,
+                    fontWeight: 600,
+                    borderBottomLeftRadius: "12px",
+                  }}
+                >
+                  {house.price}
+                </Box>
+              </Box>
+              <Typography variant="h6" fontSize={16} mt={1} fontWeight={500}>
+                {house.title}
+              </Typography>
+              <Typography fontSize={12} color="text.secondary">
+                {house.text}
+              </Typography>
+            </Box>
+          </SwiperSlide>
+        ))}
+      </Swiper>
+    </Box>
+           </Grid>
+    </Grid>
 
-                ))}
-            </Swiper>
-            </Box>  
-        </Box>
     )
 }

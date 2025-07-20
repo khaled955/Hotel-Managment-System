@@ -14,10 +14,10 @@ import DateRangeIcon from '@mui/icons-material/DateRange';
 import ActionBtn from "../../../Shared/Components/ActionBtn/ActionBtn";
 import DeleteModal from "../../../Shared/Components/DeleteModal/DeleteModal";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import RoomDetails from "../../../UserPortal/Pages/RoomDetails/RoomDetails";
 import { RoomProps} from "../../../../Interfaces/Rooms.interface";
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import DiscountIcon from '@mui/icons-material/Discount';
+import RoomDetailsCard from "../../Components/RoomDetailsCard/RoomDetailsCard";
 
 
 
@@ -142,7 +142,6 @@ const fetchRooms = useCallback( async function(){
 
   try {
     const {data} = await AdmineAxiosInstance.get(ROOMS_URLS.GET_ALL_ROOMS_FILTERED(1,100))
-    console.log(data)
 if(data.success){
   setRoomsList(data.data.rooms)
   
@@ -292,7 +291,8 @@ if(!roomsList) return<Loading/>
 
 {/* Book Details Pop Up */}
 
-{showRoomDetails &&  selectedRoom && <RoomDetails
+
+{showRoomDetails &&  selectedRoom && <RoomDetailsCard
   open={!!selectedRoom}
    room={selectedRoom as RoomProps}
   onClose={() =>{

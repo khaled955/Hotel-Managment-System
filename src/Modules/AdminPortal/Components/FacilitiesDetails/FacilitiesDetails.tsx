@@ -48,7 +48,7 @@ const FacilitiesDetails: React.FC<FacilitieDetailsProps> = ({ open, onClose, fac
       }}
     >
       <DialogTitle sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <Typography variant="h6" fontWeight={600}>
+        <Typography fontWeight={600}>
           Facility Details
         </Typography>
         <IconButton onClick={onClose}>

@@ -5,6 +5,7 @@ import MySideBar, { DrawerHeader } from '../../../AdminPortal/Components/MySideB
 import Navbar from '../Navbar/Navbar';
 import { Outlet } from 'react-router-dom';
 import useAuth from '../../../../Hooks/useAuth.hook';
+import Footer from '../../../UserPortal/Components/Footer/Footer';
 
 export default function MasterLayout() {
   const [open, setOpen] = useState(false);
@@ -20,9 +21,11 @@ const{isUser ,token}= useAuth()
 }
       <Box component="main" sx={{ flexGrow: 1 }}>
         <DrawerHeader />
-        <Box>
+        <Box minHeight={"60vh"} p={3}>
           <Outlet/>
           </Box>
+                <Footer/>
+
       </Box>
     </Box>
   );

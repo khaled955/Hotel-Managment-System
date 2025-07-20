@@ -54,7 +54,6 @@ const rows = useMemo(function(){
 },[bookingList])
 
 
-console.log(rows)
 
 
 
@@ -85,7 +84,6 @@ async function fetchBooking(){
 
   try {
     const {data} = await AdmineAxiosInstance.get(ADMIN_BOOKINGS_URLS.GET_ALL_BOOKINGS(100,1))
-    console.log(data)
 if(data.success){
   setbookingList(data.data.booking)
 }

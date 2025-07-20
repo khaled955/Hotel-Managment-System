@@ -40,3 +40,22 @@ export interface ChangePasswordProps {
 confirmPassword: string;
 
 }
+
+
+
+
+
+
+
+export interface UserProfile {
+  _id: string;
+  userName: string;
+  email: string;
+  phoneNumber: number;
+  country: string;
+  profileImage: string;
+  role: 'user' | 'admin'; // Add other roles if needed
+  verified: boolean;
+  createdAt: string; // or Date if parsed
+  updatedAt: string; // or Date if parsed
+}

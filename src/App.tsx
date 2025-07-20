@@ -1,6 +1,10 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import { lazy, Suspense } from "react"
 import { Toaster}from "react-hot-toast"
+import {loadStripe} from '@stripe/stripe-js';
+import {Elements} from '@stripe/react-stripe-js';
+
+
 // Shared Layouts and Guards
 import AuthLayout from "./Modules/Shared/Components/AuthLayout/AuthLayout"
 import MasterLayout from "./Modules/Shared/Components/MasterLayout/MasterLayout"
@@ -13,6 +17,10 @@ import { Box } from "@mui/material"
 import RoomFormCard from "./Modules/AdminPortal/Components/RoomFormCard/RoomFormCard"
 import UserRoomDetails from "./Modules/UserPortal/Pages/UserRoomDetails/UserRoomDetails"
 import RoomContextProvider from "./Context/Rooms.context"
+import CheckOut from "./Modules/UserPortal/Components/CheckOut/CheckOut"
+import BookingListDetails from "./Modules/UserPortal/Pages/BookingList/BookingListDetails";
+import FavouriteContextProvider from "./Context/Favourite.context";
+import NotFound from "./Modules/Shared/Pages/NotFound/NotFound";
 
 // Lazy-loaded Pages
 const Home = lazy(() => import("./Modules/UserPortal/Pages/Home/Home"))
@@ -34,6 +42,10 @@ const Register = lazy(() => import("./Modules/Authentication/Pages/Register/Regi
 const ForgetPassword = lazy(() => import("./Modules/Authentication/Pages/ForgetPassword/ForgetPassword"))
 const ResetPassword = lazy(() => import("./Modules/Authentication/Pages/ResetPassword/ResetPassword"))
 
+
+
+const stripePromise = loadStripe('pk_test_51OTjURBQWp069pqTmqhKZHNNd3kMf9TTynJtLJQIJDOSYcGM7xz3DabzCzE7bTxvuYMY0IX96OHBjsysHEKIrwCK006Mu7mKw8');
+
 const routes = createBrowserRouter([
   {
 
@@ -45,9 +57,12 @@ const routes = createBrowserRouter([
       { path: "home", element: <Home /> },
       { path: "explore", element: <Explore /> },
       { path: "favourite-list", element: <Favourits/> },
+      { path: "checkout", element:<CheckOut/> },
+      { path: "booking-list", element:<BookingListDetails/>},
       { path: "room-details/:id", element:<UserRoomDetails/> },
        { path: "change-password", element:<ChangePassword /> },
        { path: "profile", element:<Profile /> },
+       { path: "*", element:<NotFound/> },
 
       // protected routes in protected layout inside master layout
       { path:"dashboard" , element: <ProtectedRoot> <ProtectedLayout/></ProtectedRoot> , children:[
@@ -60,6 +75,8 @@ const routes = createBrowserRouter([
        { path: "ads", element:<Adds /> },
        { path: "list-booking", element:<ListBooking /> },
        { path: "facilities", element:<Facilities /> },
+              { path: "*", element:<NotFound/> },
+
       ]},
    
     ]
@@ -86,10 +103,14 @@ function App() {
  
     <AuthContextProvider>
           <RoomContextProvider>
+            <FavouriteContextProvider>
+             <Elements stripe={stripePromise}>
     <Suspense fallback={<Loading/>}>
       
       <RouterProvider router={routes} />
     </Suspense>
+            </Elements>
+            </FavouriteContextProvider>
             </RoomContextProvider>
           </AuthContextProvider>
 

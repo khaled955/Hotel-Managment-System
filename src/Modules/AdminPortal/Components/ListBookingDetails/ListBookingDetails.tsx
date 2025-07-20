@@ -29,7 +29,6 @@ const Transition = React.forwardRef(function Transition(
 });
 
 export default function ListBookingDetails({ open, onClose, booking }: BookingDetailsProps) {
-console.log(booking)
 
 
   const theme = useTheme();

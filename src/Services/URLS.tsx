@@ -78,7 +78,7 @@ export const DASHBOARD_URLS={
 }
 
 
-// booking_URLS
+// Admine booking_URLS
 export const ADMIN_BOOKINGS_URLS={
   GET_ALL_BOOKINGS : (pageSize:number , pageNumber:number)=>`/booking?page=${pageNumber}&size=${pageSize}`,
   GET_BOOKING_DETAILS : (id:number) => `booking/${id}`,
@@ -91,11 +91,11 @@ export const ADMIN_BOOKINGS_URLS={
 
 
 
-//  Favorite_Url
+//  Portal Favorite_Url
 export const FAVORITE_ROOMS={
   GET_ALL:"favorite-rooms",
   ADD_Fav:"favorite-rooms",
-  DELETE_Fav:(id:number)=>`favorite-rooms/${id}`,
+  DELETE_Fav:(id:string)=>`favorite-rooms/${id}`,
 }
 
 // Ads_Url
@@ -118,3 +118,16 @@ export const ALL_EXPLORE_ROOMS_URLS={
   GET_ALL_ROOMS_FILTER:(pageNumber:number,pageSize:number,startDate:string,endDate:string ,capacity:number)=>`${baseURL}/api/v0/portal/rooms/available?page=${pageNumber}&size=${pageSize}${startDate &&`&startDate=${startDate}`}${endDate &&`&endDate=${endDate}`}${capacity &&`&capacity=${capacity}`}`
   
 }
+
+// Portal booking and payment
+
+export const PORTAL_BOOKING_ROOM = `${baseURL}/api/v0/portal/booking`
+export const PORTAL_PAYMENT_URL = (paymentId:string)=>`${baseURL}/api/v0/portal/booking/${paymentId}/pay`
+export const PORTAL_BOOKING_LIST = `${baseURL}/api/v0/portal/booking/my`
+export const GET_ROOM_REVIEWS = (roomId:string)=>`${baseURL}/api/v0/portal/room-reviews/${roomId}`
+export const CREATE_ROOM_RATING= `${baseURL}/api/v0/portal/room-reviews`
+export const CREATE_ROOM_COMMENT = `${baseURL}/api/v0/portal/room-comments`
+export const GET_ROOM_COMMENTS = (roomId:string)=>`${baseURL}/api/v0/portal/room-comments/${roomId}`
+export const DELETE_COMMENT = (commentId:string)=>`${baseURL}/api/v0/portal/room-comments/${commentId}`
+export const UPDATE_COMMENT = (commentId:string)=>`${baseURL}/api/v0/portal/room-comments/${commentId}`
+

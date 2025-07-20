@@ -15,18 +15,40 @@ import photo9 from "../../../../assets/images/rooms/room9.png"
 import photo10 from "../../../../assets/images/rooms/room10.png"
 import photo11 from "../../../../assets/images/rooms/room11.png"
 import { PortalAddsHomeProps } from "../../../../Interfaces/PortalAdds.interface";
+import useFavourites from "../../../../Hooks/useFavourites";
+import { useCallback } from "react";
+import { UserFavoriteProps } from "../../../../Interfaces/FavouriteContext.interface";
 
 
 const imageGallery = [photo11 ,photo10,photo9,photo8,photo7,photo6,photo5,photo4,photo3,photo2,photo1]
 
 
 export default function MostPopularAddsCard({add , index}:{add:PortalAddsHomeProps , index:number}) {
+const {favList , addRoomToFavourites , removeRoomFromFavourites} = useFavourites()
+
+
+const favActionBtn = useCallback(function(roomId:string)
+{
+const isInList =favList?.some((fav:UserFavoriteProps)=>fav.rooms.some((rom)=>rom._id === roomId))
+if(isInList) removeRoomFromFavourites(roomId)
+if(!isInList) addRoomToFavourites(roomId)
+},[favList , removeRoomFromFavourites ,addRoomToFavourites])
+
+
+
+
+
+
+
+
 
   return (
     <Grid    className={styles.cardWrapper} size={{xs:12 , sm:12 , md:3}} position={"relative"} sx={{borderRadius:4,overflow:"hidden"}}>
-<Box className={styles.cardOverlay} component={"div"} sx={{position:"absolute",top:0,left:0,right:0,bgcolor:"black",zIndex:10,opacity:.3 ,display:"flex" ,justifyContent:"center",alignItems:"center",gap:4}}>
-  <IconButton>
-  <FavoriteIcon sx={{color:"white" , fontSize:40}}/>
+<Box className={styles.cardOverlay} component={"div"} sx={{position:"absolute",top:0,left:0,right:0,bgcolor:"black",zIndex:10,opacity:.6 ,display:"flex" ,justifyContent:"center",alignItems:"center",gap:4}}>
+  <IconButton onClick={()=>{
+    favActionBtn(add.room._id)
+  }}>
+  <FavoriteIcon  sx={{color:favList?.some((fav:UserFavoriteProps)=>fav.rooms.some((rom)=>rom._id === add.room._id))?"red":"white" , fontSize:40}}/>
   </IconButton>
 
 <Link to={`/room-details/${add.room._id}`}>

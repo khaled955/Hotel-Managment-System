@@ -15,19 +15,35 @@ import photo8 from "../../../../assets/images/rooms/room8.jpeg"
 import photo9 from "../../../../assets/images/rooms/room9.png"
 import photo10 from "../../../../assets/images/rooms/room10.png"
 import photo11 from "../../../../assets/images/rooms/room11.png"
+import useFavourites from "../../../../Hooks/useFavourites";
+import { useCallback } from "react";
+import { UserFavoriteProps } from "../../../../Interfaces/FavouriteContext.interface";
+import useAuth from "../../../../Hooks/useAuth.hook";
 
 
 const imageGallery = [photo11 ,photo10,photo9,photo8,photo7,photo6,photo5,photo4,photo3,photo2,photo1]
 
 
 export default function RoomCard({room , index}:{room:RoomExplore , index:number}) {
+const {favList , addRoomToFavourites , removeRoomFromFavourites} = useFavourites()
+const {token} = useAuth()
+
+const favActionBtn = useCallback(function(roomId:string)
+{
+const isInList =favList?.some((fav:UserFavoriteProps)=>fav.rooms.some((rom)=>rom._id === roomId))
+if(isInList) removeRoomFromFavourites(roomId)
+if(!isInList) addRoomToFavourites(roomId)
+},[favList , removeRoomFromFavourites ,addRoomToFavourites])
+
 
   return (
     <Grid   className={styles.cardWrapper} size={{xs:12 , sm:4 , md:3 ,}} position={"relative"} sx={{borderRadius:4,overflow:"hidden"}}>
-<Box className={styles.cardOverlay} component={"div"} sx={{position:"absolute",top:0,left:0,right:0,bgcolor:"black",zIndex:10,opacity:.3 ,display:"flex" ,justifyContent:"center",alignItems:"center",gap:4}}>
-  <IconButton>
-  <FavoriteIcon sx={{color:"white" , fontSize:40}}/>
-  </IconButton>
+<Box className={styles.cardOverlay} component={"div"} sx={{position:"absolute",top:0,left:0,right:0,bgcolor:"black",zIndex:10,opacity:.6 ,display:"flex" ,justifyContent:"center",alignItems:"center",gap:4}}>
+ {token &&  <IconButton onClick={()=>{
+    favActionBtn(room._id)
+  }}>
+  <FavoriteIcon sx={{color:favList?.some((fav:UserFavoriteProps)=>fav.rooms.some((rom)=>rom._id === room._id))?"red":"white" , fontSize:40}}/>
+  </IconButton>}
 
 <Link to={`/room-details/${room._id}`}>
  <VisibilityIcon sx={{color:"white" , fontSize:40}}/>

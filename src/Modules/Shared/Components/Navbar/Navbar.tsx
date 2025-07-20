@@ -7,22 +7,20 @@ import {
   Avatar,
   Menu,
   MenuItem,
-  Tooltip,
+  
   
   styled,
   Typography,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import Brightness4Icon from '@mui/icons-material/Brightness4';
-import Brightness7Icon from '@mui/icons-material/Brightness7';
-import TranslateIcon from '@mui/icons-material/Translate';
 import Badge, { badgeClasses } from '@mui/material/Badge';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useAuth from '../../../../Hooks/useAuth.hook';
-
+import useFavourites from '../../../../Hooks/useFavourites';
+import avatar from "../../../../assets/images/profile.jpg"
 const drawerWidth = 240;
 
 interface AppBarProps {
@@ -39,6 +37,9 @@ const CartBadge = styled(Badge)`
     right: -6px;
   }
 `;
+
+
+
 
 
 
@@ -73,12 +74,32 @@ const inactiveStyle = {
   textDecoration: 'none',
 };
 
+
+
+
+
+
 const Navbar = ({ open, handleOpen }: AppBarProps) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [darkMode, setDarkMode] = useState(false);
   const navigate = useNavigate();
-const {logOut ,isUser ,token} = useAuth()
+const {logOut ,isUser ,token ,getUserInformation,userInfo} = useAuth()
+const {favList,getAllFavourites} = useFavourites()
 
+
+useEffect(()=>{
+  if(token && isUser){
+      getAllFavourites()
+
+  }
+},[getAllFavourites , token , isUser])
+
+
+useEffect(()=>{
+  if(token){
+      getUserInformation()
+
+  }
+},[getUserInformation , token , isUser])
 
 
 
@@ -91,15 +112,14 @@ const {logOut ,isUser ,token} = useAuth()
     setAnchorEl(null);
   };
 
-  const toggleDarkMode = () => {
-    setDarkMode((prev) => !prev);
-  };
+
 
   const handleLogout = () => {
     logOut()
     handleMenuClose();
     navigate('/');
   };
+
 
   return (
     <AppBar position="fixed" open={open} color="default">
@@ -129,6 +149,7 @@ const {logOut ,isUser ,token} = useAuth()
             Staycation
           </Typography>
 
+         {(! token ||isUser) && <>
           <NavLink
             to="/"
             style={({ isActive }: { isActive: boolean }) =>
@@ -146,12 +167,14 @@ const {logOut ,isUser ,token} = useAuth()
           >
             <Button color="inherit">Explore</Button>
           </NavLink>
+         </>}
 
 {token && isUser &&    <IconButton onClick={()=>{
   navigate("/favourite-list")
 }}>
       <FavoriteIcon fontSize="small"  color='primary'/>
-      <CartBadge badgeContent={1} color="primary" overlap="circular" />
+      <CartBadge badgeContent={favList?.[0]?.rooms?.length?.toString() || "0"} color="primary" overlap="circular" />
+
     </IconButton>}
 
 
@@ -161,24 +184,15 @@ const {logOut ,isUser ,token} = useAuth()
 
         {/* Right Section */}
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-          <Tooltip title="Toggle dark mode">
-            <IconButton color="inherit" onClick={toggleDarkMode}>
-              {darkMode ? <Brightness7Icon /> : <Brightness4Icon />}
-            </IconButton>
-          </Tooltip>
-
-          <Tooltip title="Change Language">
-            <IconButton color="inherit">
-              <TranslateIcon />
-            </IconButton>
-          </Tooltip>
+         
+        
 
           {/* Settings Dropdown */}
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             
               <Avatar
                 alt="User"
-                src="/profile.jpg"
+                src={userInfo?.profileImage || avatar}
                 sx={{
                   width: 36,
                   height: 36,
@@ -214,6 +228,20 @@ const {logOut ,isUser ,token} = useAuth()
 </NavLink>
 
 
+
+   {token && isUser &&  <NavLink
+  to="/booking-list"
+  style={({ isActive }) => ({
+    textDecoration: 'none',
+    fontWeight: isActive ? 'bold' : 'normal',
+    color: 'inherit',
+  })}
+>
+  <MenuItem onClick={handleMenuClose}>Booking List</MenuItem>
+</NavLink>
+}
+
+
    <NavLink
   to="/change-password"
   style={({ isActive }) => ({
@@ -233,7 +261,7 @@ const {logOut ,isUser ,token} = useAuth()
 
        {!token &&    <Button onClick={()=>{
             navigate("/auth/login")
-          }} variant="outlined" color="inherit" sx={{ textTransform: 'none' }}>
+          }} variant="contained" sx={{ textTransform: 'none' }}>
             Login
           </Button>}
 
@@ -242,6 +270,9 @@ const {logOut ,isUser ,token} = useAuth()
         </Box>
       </Toolbar>
     </AppBar>
+
+
+
   );
 };
 

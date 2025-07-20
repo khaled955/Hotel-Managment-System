@@ -7,6 +7,14 @@ import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
 import BuildIcon from '@mui/icons-material/Build';
 import CampaignIcon from '@mui/icons-material/Campaign';
 import Charts from '../../Components/Charts/Charts';
+import { useEffect, useState } from 'react';
+import { isAxiosError } from 'axios';
+import toast from 'react-hot-toast';
+import useAuth from '../../../../Hooks/useAuth.hook';
+import { AdmineAxiosInstance } from '../../../../Services/AxiosInstance';
+import { DASHBOARD_URLS } from '../../../../Services/URLS';
+import Loading from '../../../Shared/Pages/Loading/Loading';
+import { DashboardStats } from '../../../../Interfaces/Dashboard.interfaces';
 
 
 
@@ -23,6 +31,28 @@ const Item = styled(Paper)(({ theme }) => ({
 
 
 export default function Dashboard() {
+const {token , isUser} = useAuth()
+const [dashboardData , setDashboardData] = useState<DashboardStats | null>(null)
+
+useEffect(()=>{
+  async function fetchData(){
+
+try {
+  const {data} = await AdmineAxiosInstance.get(DASHBOARD_URLS.CHART)
+  setDashboardData(data.data)
+} catch (error) {
+  if(isAxiosError(error))toast.error(error.response?.data.message || "Some thing Go Wrong!")
+}
+
+
+  }
+
+if(token && !isUser)  fetchData()
+
+},[isUser , token])
+
+
+if(!dashboardData) return <Loading/>
   return (
    <Box>
      <Box sx={{ flexGrow: 1 }}>
@@ -32,7 +62,7 @@ export default function Dashboard() {
           <Item >
             <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} p={1}>
                 <Box>
-                  <Typography variant='h3' component={"p"}> 100</Typography>
+                  <Typography variant='h3' component={"p"}> {dashboardData.rooms}</Typography>
                   <Typography variant='h4' component={"span"}> Rooms</Typography>
                 </Box>
                 <Box>
@@ -47,7 +77,7 @@ export default function Dashboard() {
             <Item >
             <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} p={1}>
                 <Box>
-                  <Typography variant='h3' component={"p"}> 70</Typography>
+                  <Typography variant='h3' component={"p"}> {dashboardData.facilities}</Typography>
                   <Typography variant='h4' component={"span"}> Facilities</Typography>
                 </Box>
                 <Box>
@@ -60,7 +90,7 @@ export default function Dashboard() {
            <Item >
             <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} p={1}>
                 <Box>
-                  <Typography variant='h3' component={"p"}> 120</Typography>
+                  <Typography variant='h3' component={"p"}> {dashboardData.ads}</Typography>
                   <Typography variant='h4' component={"span"}> Ads</Typography>
                 </Box>
                 <Box>
@@ -75,7 +105,7 @@ export default function Dashboard() {
       <Divider sx={{mt:10}}/>
 
       {/*  Charts */}
-      <Charts/>
+      <Charts dashboard={dashboardData}/>
     </Box>
    </Box>
   )

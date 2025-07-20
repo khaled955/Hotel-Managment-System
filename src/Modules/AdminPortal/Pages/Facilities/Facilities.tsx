@@ -100,7 +100,6 @@ const fetchFacilities = useCallback( async function fetchAdds(){
 
   try {
     const {data} = await AdmineAxiosInstance.get(FACILITES_URLS.GET_FACILITES)
-    console.log(data)
 if(data.success){
   setFacilitiesList(data.data.facilities)
   

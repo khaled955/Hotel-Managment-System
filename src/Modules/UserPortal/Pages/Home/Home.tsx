@@ -6,12 +6,13 @@ import { useEffect } from "react";
 import useAuth from "../../../../Hooks/useAuth.hook";
 import { useNavigate } from "react-router-dom";
 import HousesBackyard from "../../Components/HousesBackyard/HousesBackyard";
+import HotelLivingRoom from "../../Components/HotelLivingRoom/HotelLivingRoom";
+import Testimonials from "../../Components/Testimonials/Testimonials";
 
 export default function Home() {
 const{setCapacity , setEndDate , setStartDate}= useExploreRooms()
 const{token , isUser}= useAuth()
 const navigate = useNavigate()
-
 
 useEffect(()=>{
     if(token && !isUser){
@@ -30,12 +31,13 @@ useEffect(()=>{
     setStartDate("")
   },[setCapacity , setEndDate , setStartDate])
   return (
-    <Grid container spacing={2} justifyContent={"center"} overflow={"hidden"} px={1} py={3}>
+    <Grid container spacing={2} justifyContent={"center"} overflow={"hidden"} px={1} pt={3}>
       <Grid size={{xs:12}} px={1}>
 <HeaderHomeXplore/>
       <MostPopularAdds/>
       <HousesBackyard/>
-
+      <HotelLivingRoom/>
+      <Testimonials/>
       </Grid>
     </Grid>
   )

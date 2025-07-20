@@ -97,7 +97,6 @@ const links = [
   { text: 'Ads', path: '/dashboard/ads', icon: <CampaignIcon /> },
   { text: 'List Booking', path: '/dashboard/list-booking', icon: <ListAltIcon /> },
   { text: 'Facilities', path: '/dashboard/facilities', icon: <BuildIcon /> },
-  { text: 'Change Password', path: 'change-password', icon: <LockResetIcon /> },
 ];
 
 const MySideBar = ({ open, handleClose }: SidebarProps) => {

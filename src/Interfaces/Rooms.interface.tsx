@@ -15,7 +15,7 @@ export interface RoomProps {
   capacity: number;
   discount: number;
   facilities: RoomFacility[];
-  createdBy: RoomCreator 
+  createdBy: RoomCreator | string
   images: string[];
   createdAt: string; // ISO date
   updatedAt: string; // ISO date

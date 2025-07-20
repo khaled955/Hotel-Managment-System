@@ -23,7 +23,6 @@ export default function AddsFormCard({ open, onClose ,title ,handleCreateNewAdd,
 const [rooms , setRooms] = useState<AddsRoom[] | []>([])
 const {register , handleSubmit , formState:{errors , isSubmitting}, control , reset} = useForm<CreateAddProps>({mode:"onChange"})
 
-console.log(selectedAdd)
 
 
 useEffect(()=>{

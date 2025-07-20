@@ -3,18 +3,17 @@ import Stack from '@mui/material/Stack';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { useMemo, useState } from "react";
-import { mobileAndDesktopOS, valueFormatter } from './WebUsageStats';
 import { pieArcLabelClasses, PieChart } from '@mui/x-charts/PieChart';
+import { DashboardStats } from "../../../../Interfaces/Dashboard.interfaces";
 
 
 
 
 
 
-export default function Charts() {
+export default function Charts({dashboard}:{dashboard:DashboardStats}) {
   const [isHidden, setIsHidden] =useState(false);
   const [skipAnimation] =useState(false);
-  const [itemNb] =useState(2);
   const [radius] = useState(50);
 
 
@@ -37,12 +36,12 @@ const series =useMemo(function(){
   return  [
   {
     data: [
-      { id: 0, value: 10, label: 'Complete' },
-      { id: 1, value: 15, label: 'Pending' },
+      { id: 0, value: dashboard.bookings.completed || 0, label: 'Complete' },
+      { id: 1, value: dashboard.bookings.pending || 0, label: 'Pending' },
     ],
   },
 ];
-},[])
+},[dashboard.bookings.completed ,dashboard.bookings.pending])
 
 
 
@@ -100,11 +99,13 @@ const series =useMemo(function(){
         width={300}
         series={[
           {
-            data: mobileAndDesktopOS.slice(0, itemNb),
+            data: [
+    { id: 0, value: dashboard.users.user || 0, label: 'Users' },
+    { id: 1, value: dashboard.users.admin || 0, label: 'Admins' },
+  ],
             innerRadius: radius,
             arcLabel: (params) => params.label ?? '',
             arcLabelMinAngle: 20,
-            valueFormatter,
           },
         ]}
         skipAnimation={skipAnimation}

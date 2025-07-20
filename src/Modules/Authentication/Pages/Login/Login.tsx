@@ -95,11 +95,13 @@ if(data.success){
   setToken(data.data.token)
   toast.success( data.message || "login Successfully")
   setHelperText("")
-setTimeout(()=>{
-    navigate("/")
+if(data.user.role === "admin"){
+  navigate("/dashboard")
+} else{
+  navigate("/")
 }
 
-,1500)
+
 }
 
 

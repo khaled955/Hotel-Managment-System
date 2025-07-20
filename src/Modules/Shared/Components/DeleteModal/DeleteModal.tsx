@@ -1,67 +1,75 @@
+import { DeletModelProps } from '../../../../Interfaces/DeletModal.interface';
+import delet from "../../../../assets/images/delete.png"
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import { useTheme } from '@mui/material/styles';
-import { DeletModelProps } from '../../../../Interfaces/DeletModal.interface';
-import delet from "../../../../assets/images/delete.png"
 import { Avatar, Box } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-
-export default function DeleteModal({ onClose , currentData ,open , message , loading,onDelete }:DeletModelProps) {
-
-  const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
+import CircularProgress from '@mui/material/CircularProgress'; // Added for loading state
 
 
-
-
+export default function DeleteModal({ onClose, currentData, open, message, loading, onDelete }: DeletModelProps) {
 
   return (
-    <div>
-   
-      <Dialog
-        fullScreen={fullScreen}
-        open={open}
-        onClose={onClose}
-        aria-labelledby="responsive-dialog-title"
-      >
-        <DialogTitle id="responsive-dialog-title">
-            🗑️ Delete Confirmation Message
-
-        </DialogTitle>
-        <DialogContent>
-
-
-               <Box component={"div"} display={"flex"} justifyContent={"center"} mb={2}> 
-            <Avatar sx={{height:100 , width:100}} src={delet}/>
-               </Box>
- 
-          <DialogContentText>
-            {message}
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button disabled={loading} variant='contained' autoFocus onClick={onClose}>
-            Cancel
-          </Button>
-
-
-   <Button loading={loading} variant="contained" color='warning' startIcon={<DeleteIcon />} onClick={()=>{onDelete(currentData._id)}} autoFocus>
-        Delete
-      </Button>
-
-        </DialogActions>
-      </Dialog>
-
-
-
-
-
-
-    </div>
-  )
+    <Dialog
+      open={open}
+      onClose={onClose}
+      aria-labelledby="responsive-dialog-title"
+      fullWidth  // Ensures dialog uses available width
+      maxWidth="sm" // Controls maximum width (xs, sm, md, lg, xl)
+    >
+      <DialogTitle id="responsive-dialog-title">
+        🗑️ Delete Confirmation
+      </DialogTitle>
+      
+      <DialogContent>
+        <Box display="flex" justifyContent="center" mb={2}>
+          <Avatar 
+            sx={{ 
+              height: { xs: 80, sm: 100 }, 
+              width: { xs: 80, sm: 100 } 
+            }} 
+            src={delet} 
+          />
+        </Box>
+        
+        <DialogContentText textAlign="center">
+          {message}
+        </DialogContentText>
+      </DialogContent>
+      
+      <DialogActions sx={{ padding: 3 }}>
+        <Button 
+          disabled={loading} 
+          variant="outlined" 
+          onClick={onClose}
+          sx={{ flex: 1 }}
+        >
+          Cancel
+        </Button>
+        
+        <Button
+          variant="contained"
+          color="error"
+          disabled={loading}
+          onClick={() => onDelete(currentData._id)}
+          startIcon={loading ? <CircularProgress size={20} /> : <DeleteIcon />}
+          sx={{ flex: 1 }}
+        >
+          {loading ? 'Deleting...' : 'Delete'}
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
 }
+
+
+
+
+
+
+
+
