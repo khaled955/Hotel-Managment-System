@@ -68,15 +68,11 @@ export default function RoomDetailsCard({ open, onClose, room }: RoomDetailsModa
             <Typography>{typeof room.createdBy === "string" && room.createdBy}</Typography>
           </Grid>
 
-          <Grid size={{xs:12 , sm:6}}>
-            <Typography variant="subtitle2" color="text.secondary">Created At</Typography>
-            <Typography>{new Date(room.createdAt).toLocaleDateString()}</Typography>
-          </Grid>
-
+        
           <Grid size={{xs:12}}>
             <Typography variant="subtitle2" color="text.secondary">Facilities</Typography>
             <Grid container spacing={1} mt={1}>
-              {room.facilities.map((f) => (
+              {room?.facilities?.map((f) => (
                 <Grid  key={f._id}>
                   <Chip label={f.name} color="primary" variant="outlined" />
                 </Grid>

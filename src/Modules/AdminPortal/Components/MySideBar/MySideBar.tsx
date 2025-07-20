@@ -21,7 +21,6 @@ import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
 import CampaignIcon from '@mui/icons-material/Campaign';
 import ListAltIcon from '@mui/icons-material/ListAlt';
 import BuildIcon from '@mui/icons-material/Build';
-import LockResetIcon from '@mui/icons-material/LockReset';
 import LogoutIcon from '@mui/icons-material/Logout';
 import useAuth from '../../../../Hooks/useAuth.hook';
 

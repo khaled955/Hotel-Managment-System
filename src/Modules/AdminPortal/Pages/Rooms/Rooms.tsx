@@ -42,7 +42,7 @@ const {isUser,token} = useAuth()
 const rows = useMemo(function(){
   
   return roomsList?.map((room:RoomProps)=>{
-    return {_id:room._id ,roomNumber:room.roomNumber,createdBy:room.createdBy.userName,createdAt:room.createdAt,
+    return {_id:room._id ,roomNumber:room.roomNumber,createdBy:room.createdBy,createdAt:room.createdAt,
       capacity:room.capacity,discount:room.discount,price:room.price,
       // hidden data
       images:room.images , facilities:room.facilities

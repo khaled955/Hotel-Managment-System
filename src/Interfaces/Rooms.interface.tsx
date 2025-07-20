@@ -10,15 +10,15 @@ export interface RoomCreator {
 
 export interface RoomProps {
   _id: string;
-  roomNumber: string;
-  price: number;
-  capacity: number;
-  discount: number;
-  facilities: RoomFacility[];
-  createdBy: RoomCreator | string
-  images: string[];
-  createdAt: string; // ISO date
-  updatedAt: string; // ISO date
+  roomNumber?: string;
+  price?: number;
+  capacity?: number;
+  discount?: number;
+  facilities?: RoomFacility[];
+  createdBy?: RoomCreator | string
+  images?: string[];
+  createdAt?: string; // ISO date
+  updatedAt?: string; // ISO date
 }
 
 
